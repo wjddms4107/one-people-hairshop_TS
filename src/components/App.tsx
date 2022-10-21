@@ -8,11 +8,12 @@ import { ReservationCheck } from "../pages/ReservationCheck/ReservationCheck";
 export function App() {
   return (
     <BrowserRouter>
-      <Nav />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/reservation" element={<Reservation />} />
-        <Route path="/reservation/check" element={<ReservationCheck />} />
+        <Route element={<Nav />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/reservation" element={<Reservation />} />
+          <Route path="/reservation/check" element={<ReservationCheck />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
