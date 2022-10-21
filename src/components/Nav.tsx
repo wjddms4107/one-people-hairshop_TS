@@ -97,10 +97,10 @@ const Dashboard = styled.div`
   background-color: #f9e5e6;
 
   ${device.desktop} {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    grid-template-areas: "wave wrapper";
+    /* display: grid; */
+    /* grid-template-columns: 1fr 1fr; */
+    /* grid-template-rows: auto; */
+    /* grid-template-areas: "wave wrapper"; */
     width: 100%;
     min-width: fit-content;
     height: 100%;
