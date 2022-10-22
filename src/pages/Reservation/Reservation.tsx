@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-// import { Calendar } from ".";
-// eslint-disable-next-line import/named
 import { Calendar } from "./components";
 
 export function Reservation() {
@@ -14,6 +12,7 @@ export function Reservation() {
 
 const Container = styled.section`
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
 `;

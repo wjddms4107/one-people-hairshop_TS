@@ -1,3 +1,4 @@
 import Calendar from "./Calendar";
+import ReservationTime from "./ReservationTime";
 
-export { Calendar };
+export { Calendar, ReservationTime };
