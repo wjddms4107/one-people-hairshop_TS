@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { colors } from "../../../styles/Theme";
 
 function ReservationTime() {
   return (
@@ -36,13 +37,14 @@ const TimeContainer = styled.div`
 `;
 
 const TimeButton = styled.button`
-  color: #5b5b5b;
-  background-color: #feeeee;
+  color: ${colors.brown};
+  background-color: ${colors.lightsPink};
   margin: 5px;
   padding: 11px 14px;
   font-size: 18px;
+
   &:hover {
-    color: #ffffff;
-    background-color: #e5989d;
+    color: ${colors.white};
+    background-color: ${colors.darkPink};
   }
 `;

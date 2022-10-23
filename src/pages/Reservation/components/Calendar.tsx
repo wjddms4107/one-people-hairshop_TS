@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/esm/locale";
 import ReservationTime from "./ReservationTime";
+import { colors } from "../../../styles/Theme";
 
 function Calendar() {
   const [startDate, setStartDate] = useState<Date | null>(new Date());
@@ -31,16 +32,17 @@ function Calendar() {
 const CalendarSection = styled.section`
   display: flex;
   flex-direction: row;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
   .react-datepicker {
     height: 470px;
     border: 0px;
     font-size: 20px;
-    background-color: #feeeee;
+    background-color: ${colors.lightsPink};
   }
 
   .react-datepicker__navigation-icon::before {
-    border-color: #5b5b5b;
+    border-color: ${colors.brown};
   }
 
   .react-datepicker__navigation {
@@ -58,23 +60,23 @@ const CalendarSection = styled.section`
 
   .react-datepicker__header {
     border: 0px;
-    background-color: #feeeee;
+    background-color: ${colors.lightsPink};
   }
 
   .react-datepicker__current-month {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 28px;
     height: 60px;
-    color: #5b5b5b;
+    color: ${colors.brown};
+    font-size: 28px;
   }
 
   .react-datepicker__day-name,
   .react-datepicker__day,
   .react-datepicker__time-name {
-    color: #5b5b5b;
     margin: 15px;
+    color: ${colors.brown};
   }
 
   .react-datepicker__day--selected,
@@ -82,13 +84,13 @@ const CalendarSection = styled.section`
   .react-datepicker__day--keyboard-selected,
   .react-datepicker__day--in-range,
   .react-datepicker__day--in-selecting-range {
+    background-color: ${colors.darkPink};
+    color: ${colors.white};
     border-radius: 50%;
-    background-color: #e5989d;
-    color: #ffffff;
   }
 
   .react-datepicker__day--disabled {
-    color: #d2d0d0;
+    color: ${colors.grey};
   }
 `;
 

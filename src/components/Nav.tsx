@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate, Outlet } from "react-router-dom";
 import { HiScissors } from "react-icons/hi";
+import { device, deviceSizes } from "../styles/Theme";
 
 export function Nav() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ export function Nav() {
           <button type="button" onClick={() => navigate("/")}>
             <li>
               <HiScissors />
-              JHair
+              뽀까까까
             </li>
           </button>
           <button type="button" onClick={() => navigate("/reservation")}>
@@ -30,18 +31,6 @@ export function Nav() {
     </Container>
   );
 }
-
-const deviceSizes = {
-  mobile: "375px",
-  tablet: "768px",
-  desktop: "1024px",
-};
-
-const device = {
-  mobile: `@media only screen and (max-width: ${deviceSizes.mobile})`,
-  tablet: `@media only screen and (min-width: ${deviceSizes.tablet}) and (max-width: ${deviceSizes.desktop})`,
-  desktop: `@media only screen and (min-width: ${deviceSizes.desktop})`,
-};
 
 const Container = styled.main`
   margin: 300px auto;
@@ -87,7 +76,8 @@ const Container = styled.main`
     height: 100%;
     box-sizing: border-box;
     background-color: #ffffff;
-    box-shadow: 1px 3px 10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+      rgba(0, 0, 0, 0.22) 0px 10px 10px;
   }
 `;
 
@@ -97,10 +87,6 @@ const Dashboard = styled.div`
   background-color: #f9e5e6;
 
   ${device.desktop} {
-    /* display: grid; */
-    /* grid-template-columns: 1fr 1fr; */
-    /* grid-template-rows: auto; */
-    /* grid-template-areas: "wave wrapper"; */
     width: 100%;
     min-width: fit-content;
     height: 100%;
