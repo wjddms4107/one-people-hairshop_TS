@@ -1,12 +1,25 @@
 import React from "react";
-import styled from "styled-components";
-import { colors } from "../../../styles/Theme";
+import styled, { css } from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch } from "@reduxjs/toolkit";
+import { colors } from "styles/Theme";
+import { clickTime } from "store/date";
+import { RootState } from "store/store";
 
 function ReservationTime() {
+  const dispatch: Dispatch = useDispatch();
+  const { selectedTime } = useSelector((state: RootState) => state.date);
+
   return (
     <TimeContainer>
       {TIME_BUTTON.map(({ id, time }) => (
-        <TimeButton key={id} type="button">
+        <TimeButton
+          key={id}
+          type="button"
+          onClick={(e) => dispatch(clickTime((e.target as Element).innerHTML))}
+          time={time}
+          selectedTime={selectedTime}
+        >
           {time}
         </TimeButton>
       ))}
@@ -29,17 +42,18 @@ const TIME_BUTTON = [
 ];
 
 const TimeContainer = styled.div`
+  height: 470px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #f3cecf;
+  background-color: ${colors.lightPink};
+  border-left: 2px double ${colors.brown};
 `;
 
-const TimeButton = styled.button`
+const TimeButton = styled.button<{ time: string; selectedTime: string }>`
   color: ${colors.brown};
-  background-color: ${colors.lightsPink};
-  margin: 5px;
+  margin: 4px;
   padding: 11px 14px;
   font-size: 18px;
 
@@ -47,4 +61,11 @@ const TimeButton = styled.button`
     color: ${colors.white};
     background-color: ${colors.darkPink};
   }
+
+  ${(props) =>
+    props.time === props.selectedTime &&
+    css`
+      color: ${colors.white};
+      background-color: ${colors.darkPink};
+    `}
 `;
