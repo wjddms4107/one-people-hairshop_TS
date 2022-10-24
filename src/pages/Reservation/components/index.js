@@ -1,4 +1,5 @@
 import Calendar from "./Calendar";
 import ReservationInfo from "./ReservationInfo";
+import ReservationModal from "./ReservationModal";
 
-export { Calendar, ReservationInfo };
+export { Calendar, ReservationInfo, ReservationModal };

@@ -5,9 +5,9 @@ import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/esm/locale";
+import { colors } from "styles/Theme";
+import { clickCalendar } from "store/date";
 import ReservationTime from "./ReservationTime";
-import { colors } from "../../../styles/Theme";
-import { clickCalendar } from "../../../store/date";
 
 function Calendar() {
   const dispatch: Dispatch = useDispatch();
@@ -44,13 +44,12 @@ function Calendar() {
 const CalendarSection = styled.section`
   display: flex;
   flex-direction: row;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
   .react-datepicker {
     height: 470px;
     border: 0px;
     font-size: 18px;
-    background-color: ${colors.lightsPink};
+    background-color: ${colors.lightPink};
   }
 
   .react-datepicker__navigation-icon::before {
@@ -71,7 +70,7 @@ const CalendarSection = styled.section`
 
   .react-datepicker__header {
     border: 0px;
-    background-color: ${colors.lightsPink};
+    background-color: ${colors.lightPink};
   }
 
   .react-datepicker__current-month {

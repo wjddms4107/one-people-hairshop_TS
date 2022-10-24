@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { device, deviceSizes } from "styles/Theme";
+import { RootState } from "store/store";
 import { Calendar, ReservationInfo } from "./components";
-import { device, deviceSizes, colors } from "../../styles/Theme";
-import { RootState } from "../../store/store";
 
 export function Reservation() {
   const { selectedTime, month } = useSelector((state: RootState) => state.date);
@@ -26,7 +26,6 @@ export function Reservation() {
 }
 
 const Progress = styled.div`
-  color: ${colors.brown};
   font-size: 27px;
   font-weight: 600;
   text-align: center;

@@ -1,15 +1,13 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
-import { colors } from "../../../styles/Theme";
-import { RootState } from "../../../store/store";
-import {
-  changeName,
-  changeNumber,
-  clickSort,
-  changeRequest,
-} from "../../../store/info";
+import { RootState } from "store/store";
+import { colors } from "styles/Theme";
+import { changeName, changeNumber, clickSort, changeRequest } from "store/info";
+import Modal from "react-modal";
+import { HiScissors } from "react-icons/hi";
+import ReservationModal from "./ReservationModal";
 
 function ReservationInfo() {
   const dispatch: Dispatch = useDispatch();
@@ -20,10 +18,23 @@ function ReservationInfo() {
     (state: RootState) => state.info
   );
 
+  const [isOpenModal, setOpenModal] = useState<boolean>(false);
+
+  const openModal = useCallback(() => {
+    setOpenModal(true);
+  }, [isOpenModal]);
+
+  const closeModal = useCallback(() => {
+    setOpenModal(false);
+  }, [isOpenModal]);
+
   return (
     <Container>
       <InfoHeader>
-        <h1>뽀까까까</h1>
+        <h1>
+          <HiScissors />
+          뽀까까까
+        </h1>
         <div>
           예약시간
           <span>{` ${month}월 ${day}일 ${selectedTime}`}</span>
@@ -75,7 +86,39 @@ function ReservationInfo() {
           onChange={(e) => dispatch(changeRequest(e.target.value))}
         />
 
-        <SubmitButton type="submit">예약하기</SubmitButton>
+        <SubmitButton type="submit" onClick={openModal}>
+          예약하기
+        </SubmitButton>
+        <Modal
+          isOpen={isOpenModal}
+          onRequestClose={closeModal}
+          style={{
+            overlay: {
+              position: "fixed",
+              zIndex: 1020,
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "100vh",
+              background: "rgba(255, 255, 255, 0.75)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            },
+            content: {
+              background: "white",
+              width: "500px",
+              maxWidth: "calc(100vw - 2rem)",
+              maxHeight: "calc(100vh - 2rem)",
+              overflowY: "auto",
+              position: "relative",
+              border: "1px solid #ccc",
+              borderRadius: "0.3rem",
+            },
+          }}
+        >
+          <ReservationModal closeModal={closeModal} />
+        </Modal>
       </InfoMain>
     </Container>
   );
@@ -94,12 +137,12 @@ const HAIR_SORTS = [
 const Container = styled.section`
   width: 100%;
   height: 470px;
-  margin-left: 20px;ㄴㅌ
+  margin-left: 20px;
   padding: 10px 0;
   padding-left: 10px;
   color: ${colors.brown};
   background-color: ${colors.white};
-  box-shadow: ${colors.lightsPink} 0px 0px 0px 2px inset,
+  box-shadow: ${colors.lightPink} 0px 0px 0px 2px inset,
     rgb(255, 255, 255) 10px -10px 0px -3px;
 `;
 
@@ -198,6 +241,7 @@ const SubmitButton = styled.button`
   color: ${colors.brown};
   font-size: 22px;
   padding: 3px;
-  margin-top: 9px;
+  margin-top: 5px;
+
   border: 1px solid ${colors.grey};
 `;

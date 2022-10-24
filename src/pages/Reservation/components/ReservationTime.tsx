@@ -2,9 +2,9 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
-import { colors } from "../../../styles/Theme";
-import { clickTime } from "../../../store/date";
-import { RootState } from "../../../store/store";
+import { colors } from "styles/Theme";
+import { clickTime } from "store/date";
+import { RootState } from "store/store";
 
 function ReservationTime() {
   const dispatch: Dispatch = useDispatch();
@@ -42,11 +42,12 @@ const TIME_BUTTON = [
 ];
 
 const TimeContainer = styled.div`
+  height: 470px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: ${colors.lightsPink};
+  background-color: ${colors.lightPink};
   border-left: 2px double ${colors.brown};
 `;
 
