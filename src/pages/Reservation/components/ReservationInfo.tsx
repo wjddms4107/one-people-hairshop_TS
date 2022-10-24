@@ -1,19 +1,26 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 import { colors } from "../../../styles/Theme";
+import { RootState } from "../../../store/store";
 
 function ReservationInfo() {
+  const { month, day, selectedTime } = useSelector(
+    (state: RootState) => state.date
+  );
+
   return (
     <Container>
       <InfoHeader>
         <h1>뽀까까까</h1>
         <div>
-          예약시간 : <span>10월 22일 10:00</span>
+          예약시간
+          <span>{` ${month}월 ${day}일 ${selectedTime}`}</span>
         </div>
       </InfoHeader>
       <InfoMain>
         <InfoSort>
-          성함
+          이름
           <MainInput />
         </InfoSort>
 
@@ -35,6 +42,8 @@ function ReservationInfo() {
 
         <InfoSort>요청사항</InfoSort>
         <RequestTextarea />
+
+        <SubmitButton type="submit">예약</SubmitButton>
       </InfoMain>
     </Container>
   );
@@ -53,12 +62,12 @@ const HAIR_SORTS = [
 const Container = styled.section`
   width: 100%;
   height: 470px;
-  margin: 20px;
-  padding: 10px 0;
-  color: #5b5b5b;
+  margin-left: 20px;
+  padding: 20px 0;
+  color: ${colors.brown};
   background-color: ${colors.white};
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
-    rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+  box-shadow: ${colors.lightsPink} 0px 0px 0px 2px inset,
+    rgb(255, 255, 255) 10px -10px 0px -3px;
 `;
 
 const InfoHeader = styled.header`
@@ -98,7 +107,7 @@ const InfoSort = styled.div`
 
 const MainInput = styled.input`
   width: 80%;
-  height: 33px;
+  height: 35px;
   margin: 0px 10px;
   padding-left: 5px;
   border: 3px solid ${colors.lightGrey};
@@ -108,7 +117,7 @@ const Sorts = styled.div`
   display: flex;
   align-items: center;
   width: 82%;
-  height: 33px;
+  height: 35px;
   margin: 0px 10px;
   padding-left: 5px;
 
@@ -130,4 +139,9 @@ const RequestTextarea = styled.textarea`
   margin: 0px 15px;
   padding: 8px;
   border: 3px solid #f2f2f2;
+`;
+
+const SubmitButton = styled.button`
+  color: ${colors.brown};
+  font-size: 22px;
 `;

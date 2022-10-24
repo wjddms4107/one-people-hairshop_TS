@@ -1,16 +1,27 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Dispatch } from "@reduxjs/toolkit";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/esm/locale";
 import ReservationTime from "./ReservationTime";
 import { colors } from "../../../styles/Theme";
+import { clickCalendar } from "../../../store/date";
 
 function Calendar() {
+  const dispatch: Dispatch = useDispatch();
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [isDateSelected, setIsDateSelected] = useState<boolean>(false);
 
-  console.log("startDate:", startDate?.getMonth() && startDate.getMonth() + 1);
+  const handleCalendar = (date: Date | null) => {
+    dispatch(
+      clickCalendar({
+        month: date?.getMonth() && date.getMonth() + 1,
+        day: date?.getDate() && date.getDate(),
+      })
+    );
+  };
 
   return (
     <CalendarSection>
@@ -19,6 +30,7 @@ function Calendar() {
         onChange={(date) => {
           setStartDate(date);
           setIsDateSelected(true);
+          handleCalendar(date);
         }}
         inline
         locale={ko}
@@ -37,7 +49,7 @@ const CalendarSection = styled.section`
   .react-datepicker {
     height: 470px;
     border: 0px;
-    font-size: 20px;
+    font-size: 18px;
     background-color: ${colors.lightsPink};
   }
 
@@ -46,8 +58,7 @@ const CalendarSection = styled.section`
   }
 
   .react-datepicker__navigation {
-    top: 25px;
-    border-radius: 50%;
+    top: 22px;
   }
 
   .react-datepicker__navigation--previous {
@@ -69,7 +80,8 @@ const CalendarSection = styled.section`
     justify-content: center;
     height: 60px;
     color: ${colors.brown};
-    font-size: 28px;
+    font-size: 25px;
+    font-weight: 500;
   }
 
   .react-datepicker__day-name,
@@ -86,7 +98,6 @@ const CalendarSection = styled.section`
   .react-datepicker__day--in-selecting-range {
     background-color: ${colors.darkPink};
     color: ${colors.white};
-    border-radius: 50%;
   }
 
   .react-datepicker__day--disabled {
