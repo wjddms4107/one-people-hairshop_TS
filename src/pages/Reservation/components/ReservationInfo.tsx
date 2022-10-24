@@ -28,6 +28,14 @@ function ReservationInfo() {
     setOpenModal(false);
   }, [isOpenModal]);
 
+  const fillInfo = () => {
+    if (name === "" && number === "" && selectedSort === "") {
+      window.alert("이름, 번호, 종류선택은 필수입니다.");
+    } else {
+      openModal();
+    }
+  };
+
   return (
     <Container>
       <InfoHeader>
@@ -86,7 +94,7 @@ function ReservationInfo() {
           onChange={(e) => dispatch(changeRequest(e.target.value))}
         />
 
-        <SubmitButton type="submit" onClick={openModal}>
+        <SubmitButton type="submit" onClick={fillInfo}>
           예약하기
         </SubmitButton>
         <Modal

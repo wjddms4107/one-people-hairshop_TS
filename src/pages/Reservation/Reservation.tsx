@@ -7,7 +7,6 @@ import { Calendar, ReservationInfo } from "./components";
 
 export function Reservation() {
   const { selectedTime, month } = useSelector((state: RootState) => state.date);
-
   const selectedOption = () => {
     if (!month && !selectedTime) return "📅 날짜를 선택해주세요.";
     if (month && !selectedTime) return "⏱ 시간을 선택해주세요.";

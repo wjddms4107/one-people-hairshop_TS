@@ -53,7 +53,7 @@ const TimeContainer = styled.div`
 
 const TimeButton = styled.button<{ time: string; selectedTime: string }>`
   color: ${colors.brown};
-  margin: 5px;
+  margin: 4px;
   padding: 11px 14px;
   font-size: 18px;
 

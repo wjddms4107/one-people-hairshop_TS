@@ -4,15 +4,32 @@ import { RootState } from "store/store";
 import styled from "styled-components";
 import { colors } from "styles/Theme";
 import { HiScissors } from "react-icons/hi";
+import { firestore } from "../../../firebase";
 
 interface ModalDefaultType {
   closeModal: () => void;
 }
+
 function ReservationModal({ closeModal }: ModalDefaultType) {
   const { month, day, selectedTime } = useSelector(
     (state: RootState) => state.date
   );
-  const { name, selectedSort } = useSelector((state: RootState) => state.info);
+  const { name, number, selectedSort, request } = useSelector(
+    (state: RootState) => state.info
+  );
+
+  const addUserInfo = () => {
+    const reserve = firestore.collection("reserve");
+    reserve.add({
+      name,
+      number,
+      selectedSort,
+      request,
+      month,
+      day,
+      selectedTime,
+    });
+  };
 
   return (
     <Container>
@@ -33,7 +50,7 @@ function ReservationModal({ closeModal }: ModalDefaultType) {
         <div>확인을 누르시면 예약이 완료됩니다 :)</div>
       </ModalHeader>
       <ButtonDiv>
-        <ReservationButton>확인</ReservationButton>
+        <ReservationButton onClick={addUserInfo}>확인</ReservationButton>
         <CancelButton onClick={closeModal}>취소</CancelButton>
       </ButtonDiv>
     </Container>
