@@ -39,11 +39,13 @@ const Container = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 80%;
+  width: 500px;
   min-width: ${deviceSizes.mobile};
 
   ${device.desktop} {
     width: 100%;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
   }
 `;

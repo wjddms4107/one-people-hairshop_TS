@@ -1,12 +1,23 @@
 import React from "react";
-import styled from "styled-components";
-import { useSelector } from "react-redux";
+import styled, { css } from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
+import { Dispatch } from "@reduxjs/toolkit";
 import { colors } from "../../../styles/Theme";
 import { RootState } from "../../../store/store";
+import {
+  changeName,
+  changeNumber,
+  clickSort,
+  changeRequest,
+} from "../../../store/info";
 
 function ReservationInfo() {
+  const dispatch: Dispatch = useDispatch();
   const { month, day, selectedTime } = useSelector(
     (state: RootState) => state.date
+  );
+  const { name, number, selectedSort, request } = useSelector(
+    (state: RootState) => state.info
   );
 
   return (
@@ -21,29 +32,50 @@ function ReservationInfo() {
       <InfoMain>
         <InfoSort>
           이름
-          <MainInput />
+          <NameInput
+            type="text"
+            value={name}
+            onChange={(e) => dispatch(changeName(e.target.value))}
+          />
         </InfoSort>
 
         <InfoSort>
           번호
-          <MainInput />
+          <NumberInput
+            type="text"
+            value={number}
+            placeholder="ex) 01012345678"
+            onChange={(e) => dispatch(changeNumber(e.target.value))}
+          />
         </InfoSort>
 
         <InfoSort>
           종류
           <Sorts>
             {HAIR_SORTS.map(({ id, sort }) => (
-              <button key={id} type="button">
+              <SortButton
+                key={id}
+                type="button"
+                onClick={(e) =>
+                  dispatch(clickSort((e.target as Element).innerHTML))
+                }
+                sort={sort}
+                selectedSort={selectedSort}
+              >
                 {sort}
-              </button>
+              </SortButton>
             ))}
           </Sorts>
         </InfoSort>
 
         <InfoSort>요청사항</InfoSort>
-        <RequestTextarea />
+        <RequestTextarea
+          value={request}
+          placeholder="요청사항이 있다면 적어주세요."
+          onChange={(e) => dispatch(changeRequest(e.target.value))}
+        />
 
-        <SubmitButton type="submit">예약</SubmitButton>
+        <SubmitButton type="submit">예약하기</SubmitButton>
       </InfoMain>
     </Container>
   );
@@ -53,7 +85,7 @@ export default ReservationInfo;
 
 const HAIR_SORTS = [
   { id: 1, sort: "커트" },
-  { id: 2, sort: "엄색" },
+  { id: 2, sort: "염색" },
   { id: 3, sort: "클리닉" },
   { id: 4, sort: "드라이" },
   { id: 5, sort: "기타" },
@@ -62,8 +94,9 @@ const HAIR_SORTS = [
 const Container = styled.section`
   width: 100%;
   height: 470px;
-  margin-left: 20px;
-  padding: 20px 0;
+  margin-left: 20px;ㄴㅌ
+  padding: 10px 0;
+  padding-left: 10px;
   color: ${colors.brown};
   background-color: ${colors.white};
   box-shadow: ${colors.lightsPink} 0px 0px 0px 2px inset,
@@ -105,11 +138,21 @@ const InfoSort = styled.div`
   padding: 10px 15px;
 `;
 
-const MainInput = styled.input`
+const NameInput = styled.input`
   width: 80%;
   height: 35px;
   margin: 0px 10px;
   padding-left: 5px;
+  font-size: 18px;
+  border: 3px solid ${colors.lightGrey};
+`;
+
+const NumberInput = styled.input`
+  width: 80%;
+  height: 35px;
+  margin: 0px 10px;
+  padding-left: 5px;
+  font-size: 18px;
   border: 3px solid ${colors.lightGrey};
 `;
 
@@ -120,18 +163,25 @@ const Sorts = styled.div`
   height: 35px;
   margin: 0px 10px;
   padding-left: 5px;
+`;
 
-  > button {
-    width: 100%;
-    height: 33px;
-    margin: 0 3px;
-    border: 3px solid ${colors.lightGrey};
+const SortButton = styled.button<{ sort: string; selectedSort: string }>`
+  width: 100%;
+  height: 33px;
+  margin: 0 3px;
+  border: 3px solid ${colors.lightGrey};
 
-    &:hover {
+  &:hover {
+    border: 3px solid ${colors.red};
+    color: ${colors.red};
+  }
+
+  ${(props) =>
+    props.sort === props.selectedSort &&
+    css`
       border: 3px solid ${colors.red};
       color: ${colors.red};
-    }
-  }
+    `}
 `;
 
 const RequestTextarea = styled.textarea`
@@ -139,9 +189,15 @@ const RequestTextarea = styled.textarea`
   margin: 0px 15px;
   padding: 8px;
   border: 3px solid #f2f2f2;
+  font-size: 18px;
 `;
 
 const SubmitButton = styled.button`
+  align-self: center;
+  width: 100px;
   color: ${colors.brown};
   font-size: 22px;
+  padding: 3px;
+  margin-top: 9px;
+  border: 1px solid ${colors.grey};
 `;
