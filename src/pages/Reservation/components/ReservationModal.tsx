@@ -1,9 +1,13 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { Dispatch } from "@reduxjs/toolkit";
 import { RootState } from "store/store";
 import styled from "styled-components";
 import { colors } from "styles/Theme";
 import { HiScissors } from "react-icons/hi";
+import { clickCalendar, clickTime } from "store/date";
+import { changeName, changeNumber, clickSort, changeRequest } from "store/info";
 import { firestore } from "../../../firebase";
 
 interface ModalDefaultType {
@@ -11,6 +15,9 @@ interface ModalDefaultType {
 }
 
 function ReservationModal({ closeModal }: ModalDefaultType) {
+  const navigate = useNavigate();
+  const dispatch: Dispatch = useDispatch();
+
   const { month, day, selectedTime } = useSelector(
     (state: RootState) => state.date
   );
@@ -29,6 +36,15 @@ function ReservationModal({ closeModal }: ModalDefaultType) {
       day,
       selectedTime,
     });
+  };
+
+  const resetUserInfo = () => {
+    dispatch(clickCalendar({ month: "", day: "" }));
+    dispatch(clickTime(""));
+    dispatch(changeName(""));
+    dispatch(changeNumber(""));
+    dispatch(clickSort(""));
+    dispatch(changeRequest(""));
   };
 
   return (
@@ -50,7 +66,15 @@ function ReservationModal({ closeModal }: ModalDefaultType) {
         <div>확인을 누르시면 예약이 완료됩니다 :)</div>
       </ModalHeader>
       <ButtonDiv>
-        <ReservationButton onClick={addUserInfo}>확인</ReservationButton>
+        <ReservationButton
+          onClick={() => {
+            addUserInfo();
+            resetUserInfo();
+            navigate("/");
+          }}
+        >
+          확인
+        </ReservationButton>
         <CancelButton onClick={closeModal}>취소</CancelButton>
       </ButtonDiv>
     </Container>
