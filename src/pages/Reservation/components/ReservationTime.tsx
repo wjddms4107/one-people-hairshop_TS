@@ -1,14 +1,48 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
 import { colors } from "styles/Theme";
 import { clickTime } from "store/date";
 import { RootState } from "store/store";
+import { firestore } from "../../../firebase";
 
 function ReservationTime() {
   const dispatch: Dispatch = useDispatch();
-  const { selectedTime } = useSelector((state: RootState) => state.date);
+  const { selectedTime, month, day } = useSelector(
+    (state: RootState) => state.date
+  );
+  const [reservedMonth, setReservedMonth] = useState();
+  const [reservedDay, setReservedDay] = useState();
+  const [reservedTime, setReservedTime] = useState();
+
+  const getReservedTime = async () => {
+    const reserve = firestore.collection("reserve");
+    const res = await reserve.get().then((userData) => userData);
+    res.forEach((el) => {
+      if (el.data().month === month && el.data().day === day) {
+        setReservedMonth(el.data().month);
+        setReservedDay(el.data().day);
+        setReservedTime(el.data().selectedTime);
+      }
+    });
+  };
+
+  useEffect(() => {
+    getReservedTime();
+  }, [month, day]);
+
+  const disabledTime = (buttonTime: string) => {
+    const date = new Date();
+    return (
+      (reservedTime === buttonTime &&
+        reservedMonth === month &&
+        reservedDay === day) ||
+      (date.getMonth() + 1 === month &&
+        date.getDate() === day &&
+        date.getHours() > parseInt(buttonTime, 10))
+    );
+  };
 
   return (
     <TimeContainer>
@@ -19,6 +53,8 @@ function ReservationTime() {
           onClick={(e) => dispatch(clickTime((e.target as Element).innerHTML))}
           time={time}
           selectedTime={selectedTime}
+          disabled={disabledTime(time)}
+          disabledTime={disabledTime(time)}
         >
           {time}
         </TimeButton>
@@ -51,7 +87,12 @@ const TimeContainer = styled.div`
   border-left: 2px double ${colors.brown};
 `;
 
-const TimeButton = styled.button<{ time: string; selectedTime: string }>`
+const TimeButton = styled.button<{
+  time: string;
+  selectedTime: string;
+  reservedTime?: string;
+  disabledTime?: boolean;
+}>`
   color: ${colors.brown};
   margin: 4px;
   padding: 11px 14px;
@@ -62,10 +103,22 @@ const TimeButton = styled.button<{ time: string; selectedTime: string }>`
     background-color: ${colors.darkPink};
   }
 
-  ${(props) =>
-    props.time === props.selectedTime &&
+  ${({ time, selectedTime }) =>
+    time === selectedTime &&
     css`
       color: ${colors.white};
       background-color: ${colors.darkPink};
+    `}
+
+  ${({ disabledTime }) =>
+    disabledTime &&
+    css`
+      color: ${colors.white};
+      background-color: ${colors.grey};
+
+      &:hover {
+        color: ${colors.white};
+        background-color: ${colors.grey};
+      }
     `}
 `;
