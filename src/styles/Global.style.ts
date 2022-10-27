@@ -34,4 +34,5 @@ export const GlobalStyle = createGlobalStyle`
   svg, image, video {
     vertical-align: top;
   }
+
 `;
