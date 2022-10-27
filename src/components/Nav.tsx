@@ -1,28 +1,41 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useState } from "react";
+import styled, { css } from "styled-components";
 import { useNavigate, Outlet } from "react-router-dom";
-import { HiScissors } from "react-icons/hi";
-import { device, deviceSizes } from "../styles/Theme";
+import { colors, device, deviceSizes } from "../styles/Theme";
 
 export function Nav() {
   const navigate = useNavigate();
+  const [activeList, setActiveList] = useState<string>();
+
+  const changeNavigate = (list: string) => {
+    switch (list) {
+      case "뽀까까까":
+        return navigate("/");
+      case "예약하기":
+        return navigate("/reservation");
+      default:
+        return navigate("/reservation/check");
+    }
+  };
 
   return (
     <Container>
       <nav>
         <ul>
-          <button type="button" onClick={() => navigate("/")}>
-            <li>
-              <HiScissors />
-              뽀까까까
-            </li>
-          </button>
-          <button type="button" onClick={() => navigate("/reservation")}>
-            <li>예약하기</li>
-          </button>
-          <button type="button" onClick={() => navigate("/reservation/check")}>
-            <li>예약확인</li>
-          </button>
+          {NAV_LIST.map(({ list, id }) => (
+            <ListButton
+              key={id}
+              type="button"
+              onClick={(e) => {
+                setActiveList((e.target as HTMLElement).innerText);
+                changeNavigate(list);
+              }}
+              activeList={activeList}
+              list={list}
+            >
+              <li>{list}</li>
+            </ListButton>
+          ))}
         </ul>
       </nav>
       <Dashboard>
@@ -31,6 +44,12 @@ export function Nav() {
     </Container>
   );
 }
+
+const NAV_LIST = [
+  { id: 1, list: "뽀까까까" },
+  { id: 2, list: "예약하기" },
+  { id: 3, list: "예약확인" },
+];
 
 const Container = styled.main`
   display: flex;
@@ -46,23 +65,13 @@ const Container = styled.main`
 
   > nav {
     display: flex;
-    margin: 20px 0;
-    height: 40px;
+    height: 70px;
 
     > ul {
       display: flex;
       flex-direction: rows;
       align-items: center;
       justify-content: center;
-
-      > button > li {
-        width: 140px;
-        display: flex;
-        font-size: 22px;
-        color: #5e5e5e;
-        font-weight: 600;
-        justify-content: center;
-      }
     }
   }
 
@@ -74,6 +83,27 @@ const Container = styled.main`
   }
 `;
 
+const ListButton = styled.button<{ activeList?: string; list: string }>`
+  width: 140px;
+  display: flex;
+  font-size: 22px;
+  color: ${colors.brown};
+  font-weight: 600;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  &:hover {
+    background-color: ${colors.lightPink};
+  }
+
+  ${({ activeList, list }) =>
+    activeList === list &&
+    css`
+      background-color: ${colors.lightPink};
+    `}
+`;
+
 const Dashboard = styled.div`
   width: 100%;
   height: 100%;
@@ -82,7 +112,6 @@ const Dashboard = styled.div`
 
   ${device.desktop} {
     height: 620px;
-
     min-width: fit-content;
   }
 `;
