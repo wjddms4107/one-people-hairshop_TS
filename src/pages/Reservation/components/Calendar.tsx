@@ -5,15 +5,14 @@ import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/esm/locale";
-import { colors } from "styles/Theme";
-import { clickCalendar } from "store/date";
+import { colors, device, deviceSizes } from "styles/Theme";
+import { clickCalendar, clickTime } from "store/date";
 import ReservationTime from "./ReservationTime";
 
 function Calendar() {
   const dispatch: Dispatch = useDispatch();
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [isDateSelected, setIsDateSelected] = useState<boolean>(false);
-
   const handleCalendar = (date: Date | null) => {
     dispatch(
       clickCalendar({
@@ -22,7 +21,6 @@ function Calendar() {
       })
     );
   };
-
   return (
     <CalendarSection>
       <DatePicker
@@ -31,6 +29,7 @@ function Calendar() {
           setStartDate(date);
           setIsDateSelected(true);
           handleCalendar(date);
+          dispatch(clickTime(""));
         }}
         inline
         locale={ko}
@@ -44,6 +43,7 @@ function Calendar() {
 const CalendarSection = styled.section`
   display: flex;
   flex-direction: row;
+  justify-content: center;
 
   .react-datepicker {
     height: 470px;

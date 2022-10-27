@@ -123,16 +123,11 @@ const ReservationButton = styled.button`
   font-size: 17px;
   color: ${colors.brown};
   font-weight: 500;
-  margin-right: 5px;
   border: 3px solid ${colors.brown};
 `;
 
-const CancelButton = styled.button`
-  width: 100%;
-  font-size: 17px;
-  color: ${colors.brown};
-  font-weight: 500;
-  border: 3px solid ${colors.brown};
+const CancelButton = styled(ReservationButton)`
+  margin-left: 5px;
 `;
 
 export default ReservationModal;

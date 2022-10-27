@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface stateType {
-  month: number | string;
-  day: number | string;
-  selectedTime: string;
+  month?: number | string;
+  day?: number | string;
+  selectedTime?: string;
 }
 
 const date = createSlice({

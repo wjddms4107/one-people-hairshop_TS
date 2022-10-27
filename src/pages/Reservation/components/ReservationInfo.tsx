@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
 import { RootState } from "store/store";
-import { colors } from "styles/Theme";
+import { colors, device, deviceSizes } from "styles/Theme";
 import { changeName, changeNumber, clickSort, changeRequest } from "store/info";
 import Modal from "react-modal";
 import { HiScissors } from "react-icons/hi";
@@ -29,8 +29,11 @@ function ReservationInfo() {
   }, [isOpenModal]);
 
   const fillInfo = () => {
+    const numberRegExp = /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/;
     if (name === "" && number === "" && selectedSort === "") {
       window.alert("이름, 번호, 종류선택은 필수입니다.");
+    } else if (!numberRegExp.test(number)) {
+      window.alert("번호를 올바르게 입력해주세요.");
     } else {
       openModal();
     }
@@ -143,15 +146,20 @@ const HAIR_SORTS = [
 ];
 
 const Container = styled.section`
-  width: 100%;
-  height: 470px;
-  margin-left: 20px;
+  width: 480px;
+  height: 100%;
+  margin-top: 30px;
   padding: 10px 0;
   padding-left: 10px;
   color: ${colors.brown};
   background-color: ${colors.white};
   box-shadow: ${colors.lightPink} 0px 0px 0px 2px inset,
     rgb(255, 255, 255) 10px -10px 0px -3px;
+
+  ${device.desktop} {
+    margin-left: 20px;
+    margin-top: 0;
+  }
 `;
 
 const InfoHeader = styled.header`
@@ -198,7 +206,7 @@ const NameInput = styled.input`
   border: 3px solid ${colors.lightGrey};
 `;
 
-const NumberInput = styled.input`
+const NumberInput = styled(NameInput)`
   width: 80%;
   height: 35px;
   margin: 0px 10px;
@@ -227,8 +235,8 @@ const SortButton = styled.button<{ sort: string; selectedSort: string }>`
     color: ${colors.red};
   }
 
-  ${(props) =>
-    props.sort === props.selectedSort &&
+  ${({ sort, selectedSort }) =>
+    sort === selectedSort &&
     css`
       border: 3px solid ${colors.red};
       color: ${colors.red};
