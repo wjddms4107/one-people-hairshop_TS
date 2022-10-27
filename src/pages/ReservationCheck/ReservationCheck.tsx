@@ -98,7 +98,7 @@ const Container = styled.div`
   > form > input {
     height: 35px;
     font-size: 18px;
-    border: 3px solid ${colors.grey};
+    border: 3px solid ${colors.white};
     padding: 4px;
   }
 
@@ -107,7 +107,7 @@ const Container = styled.div`
     font-size: 18px;
     padding: 4px;
     background-color: ${colors.lightPink};
-    border: 3px solid ${colors.grey};
+    border: 3px solid ${colors.white};
     border-left: 0px;
   }
 `;
