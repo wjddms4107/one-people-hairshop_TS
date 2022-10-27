@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
@@ -13,7 +13,6 @@ function Calendar() {
   const dispatch: Dispatch = useDispatch();
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [isDateSelected, setIsDateSelected] = useState<boolean>(false);
-
   const handleCalendar = (date: Date | null) => {
     dispatch(
       clickCalendar({
@@ -22,7 +21,6 @@ function Calendar() {
       })
     );
   };
-
   return (
     <CalendarSection>
       <DatePicker

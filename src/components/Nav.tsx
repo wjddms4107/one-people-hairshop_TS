@@ -84,12 +84,14 @@ const Container = styled.main`
 const Dashboard = styled.div`
   width: 100%;
   padding: 40px;
+  height: 620px;
   background-color: #f9e5e6;
 
   ${device.desktop} {
     width: 100%;
     min-width: fit-content;
     height: 100%;
+    height: 620px;
     background-color: #f9e5e6;
   }
 `;

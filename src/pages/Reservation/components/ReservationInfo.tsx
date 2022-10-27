@@ -29,8 +29,11 @@ function ReservationInfo() {
   }, [isOpenModal]);
 
   const fillInfo = () => {
+    const numberRegExp = /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/;
     if (name === "" && number === "" && selectedSort === "") {
       window.alert("이름, 번호, 종류선택은 필수입니다.");
+    } else if (!numberRegExp.test(number)) {
+      window.alert("번호를 올바르게 입력해주세요.");
     } else {
       openModal();
     }
@@ -144,7 +147,6 @@ const HAIR_SORTS = [
 
 const Container = styled.section`
   width: 100%;
-  height: 470px;
   margin-left: 20px;
   padding: 10px 0;
   padding-left: 10px;
@@ -198,7 +200,7 @@ const NameInput = styled.input`
   border: 3px solid ${colors.lightGrey};
 `;
 
-const NumberInput = styled.input`
+const NumberInput = styled(NameInput)`
   width: 80%;
   height: 35px;
   margin: 0px 10px;
@@ -227,8 +229,8 @@ const SortButton = styled.button<{ sort: string; selectedSort: string }>`
     color: ${colors.red};
   }
 
-  ${(props) =>
-    props.sort === props.selectedSort &&
+  ${({ sort, selectedSort }) =>
+    sort === selectedSort &&
     css`
       border: 3px solid ${colors.red};
       color: ${colors.red};

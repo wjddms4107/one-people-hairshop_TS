@@ -1,11 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styled, { css } from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
 import { colors } from "styles/Theme";
 import { clickTime } from "store/date";
 import { RootState } from "store/store";
+import { UserInfoType } from "pages/ReservationCheck/ReservationCheck";
 import { firestore } from "../../../firebase";
+
+interface TotalInfoType {
+  selectedTime?: UserInfoType[];
+  day?: UserInfoType[];
+  month?: UserInfoType[];
+  [key: number]: UserInfoType;
+}
 
 function ReservationTime() {
   const dispatch: Dispatch = useDispatch();
@@ -19,21 +27,30 @@ function ReservationTime() {
     const reserve = firestore.collection("reserve");
 
     reserve.get().then((docs) => {
-      let bucketData: string[] = [];
+      let bucketData: any[] = [];
+      let infoObjArr = [] as TotalInfoType[];
       docs.forEach((doc) => {
-        if (doc.data().month === month && doc.data().day === day) {
-          bucketData = [...bucketData, doc.data().selectedTime];
-          setReservedTime(bucketData);
-        } else {
-          setReservedTime([]);
-        }
+        infoObjArr = [...infoObjArr, { ...doc.data() }];
       });
+
+      const thisDayInfo = infoObjArr.filter(
+        (info) => info.month === month && info.day === day
+      );
+
+      if (thisDayInfo) {
+        const totalSelectedTime = thisDayInfo.map(
+          (el, i) => thisDayInfo[i].selectedTime
+        );
+
+        bucketData = [...bucketData, totalSelectedTime];
+        setReservedTime(bucketData[0]);
+      }
     });
   };
 
   useEffect(() => {
     getReservedTime();
-  }, [month, day]);
+  }, [month, day, selectedTime]);
 
   const disabledTime = (buttonTime: string) => {
     const date = new Date();
@@ -90,7 +107,7 @@ const TimeContainer = styled.div`
 
 const TimeButton = styled.button<{
   time: string;
-  selectedTime: string;
+  selectedTime?: string;
   reservedTime?: string;
   disabledTime?: boolean;
 }>`
