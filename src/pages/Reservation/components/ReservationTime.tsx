@@ -12,19 +12,22 @@ function ReservationTime() {
   const { selectedTime, month, day } = useSelector(
     (state: RootState) => state.date
   );
-  const [reservedMonth, setReservedMonth] = useState();
-  const [reservedDay, setReservedDay] = useState();
-  const [reservedTime, setReservedTime] = useState();
 
-  const getReservedTime = async () => {
+  const [reservedTime, setReservedTime] = useState<string[]>([]);
+
+  const getReservedTime = () => {
     const reserve = firestore.collection("reserve");
-    const res = await reserve.get().then((userData) => userData);
-    res.forEach((el) => {
-      if (el.data().month === month && el.data().day === day) {
-        setReservedMonth(el.data().month);
-        setReservedDay(el.data().day);
-        setReservedTime(el.data().selectedTime);
-      }
+
+    reserve.get().then((docs) => {
+      let bucketData: string[] = [];
+      docs.forEach((doc) => {
+        if (doc.data().month === month && doc.data().day === day) {
+          bucketData = [...bucketData, doc.data().selectedTime];
+          setReservedTime(bucketData);
+        } else {
+          setReservedTime([]);
+        }
+      });
     });
   };
 
@@ -35,9 +38,7 @@ function ReservationTime() {
   const disabledTime = (buttonTime: string) => {
     const date = new Date();
     return (
-      (reservedTime === buttonTime &&
-        reservedMonth === month &&
-        reservedDay === day) ||
+      reservedTime.includes(buttonTime) ||
       (date.getMonth() + 1 === month &&
         date.getDate() === day &&
         date.getHours() > parseInt(buttonTime, 10))
@@ -81,10 +82,10 @@ const TimeContainer = styled.div`
   height: 470px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   background-color: ${colors.lightPink};
   border-left: 2px double ${colors.brown};
+  padding: 0 4px;
 `;
 
 const TimeButton = styled.button<{
@@ -95,8 +96,9 @@ const TimeButton = styled.button<{
 }>`
   color: ${colors.brown};
   margin: 4px;
-  padding: 11px 14px;
-  font-size: 18px;
+  padding: 9px 10px;
+  font-size: 16px;
+  border: 1px solid ${colors.brown};
 
   &:hover {
     color: ${colors.white};
@@ -108,17 +110,18 @@ const TimeButton = styled.button<{
     css`
       color: ${colors.white};
       background-color: ${colors.darkPink};
+      border: 1px solid ${colors.darkPink};
     `}
 
   ${({ disabledTime }) =>
     disabledTime &&
     css`
-      color: ${colors.white};
-      background-color: ${colors.grey};
+      color: #b8b8b8;
+      border: 1px solid ${colors.grey};
 
       &:hover {
-        color: ${colors.white};
-        background-color: ${colors.grey};
+        color: #b8b8b8;
+        background-color: ${colors.lightPink};
       }
     `}
 `;

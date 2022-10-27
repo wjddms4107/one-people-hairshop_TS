@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { colors } from "styles/Theme";
 import { firestore } from "../../firebase";
 
-interface UserInfoType {
+export interface UserInfoType {
   month: number;
   day: number;
   name: string;
