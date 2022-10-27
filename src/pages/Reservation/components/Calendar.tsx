@@ -5,7 +5,7 @@ import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/esm/locale";
-import { colors, device, deviceSizes } from "styles/Theme";
+import { colors } from "styles/Theme";
 import { clickCalendar, clickTime } from "store/date";
 import ReservationTime from "./ReservationTime";
 
