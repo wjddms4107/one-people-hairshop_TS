@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
 import { RootState } from "store/store";
-import { colors, device, deviceSizes } from "styles/Theme";
+import { colors, device } from "styles/Theme";
 import { changeName, changeNumber, clickSort, changeRequest } from "store/info";
 import Modal from "react-modal";
 import { HiScissors } from "react-icons/hi";

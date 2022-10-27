@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { colors } from "styles/Theme";
+import { HiScissors } from "react-icons/hi";
 import { firestore } from "../../firebase";
 
 export interface UserInfoType {
@@ -15,24 +16,31 @@ export interface UserInfoType {
 
 export function ReservationCheck() {
   const [searchNumber, setSearchNumber] = useState("");
-  const [userInfo, setUserInfo] = useState<UserInfoType>();
+  const [userInfo, setUserInfo] = useState<UserInfoType | null>();
+  const [noData, setNoData] = useState<string>();
+  console.log("searchNumber:", searchNumber);
 
   const searchMyReserve = async (e: React.FormEvent<HTMLFormElement>) => {
+    setNoData("");
+    setUserInfo(null);
     e.preventDefault();
     const reserve = firestore.collection("reserve");
     const res = await reserve.get().then((userData) => userData);
+
     res.forEach((data) => {
       if (data.data().number === searchNumber) {
         const userInfoData = data.data() as UserInfoType;
         setUserInfo(userInfoData);
+      } else {
+        setNoData("예약이 없습니다.");
       }
     });
   };
 
   return (
     <Container>
-      <h1>내 예약 확인하기</h1>
-      <span>번호를 입력하면 내 예약을 확인할 수 있습니다 :)</span>
+      <h1>📝 내 예약 확인하기</h1>
+      <span>예약하신 핸드폰 번호로 조회해주세요 :)</span>
       <form onSubmit={searchMyReserve}>
         <input
           type="text"
@@ -44,15 +52,28 @@ export function ReservationCheck() {
       </form>
       {userInfo && (
         <UserInfo>
-          <div>{`예약자 성함: ${userInfo?.name} `}</div>
-          <div>
+          <Title>
+            <HiScissors />
+            뽀까까까
+          </Title>
+          <Info>{`예약자 성함: ${userInfo?.name} `}</Info>
+          <Info>
             {`일시: ${userInfo?.month}월 ${userInfo?.day}일 ${userInfo?.selectedTime} `}
-          </div>
-          <div>{`시술 종류: ${userInfo?.selectedSort} `}</div>
-          <div>{`요청사항: ${
+          </Info>
+          <Info>{`시술 종류: ${userInfo?.selectedSort} `}</Info>
+          <Info>{`요청사항: ${
             userInfo?.request === "" ? "없음" : userInfo?.request
-          } `}</div>
-          <div>{`연락처: ${userInfo?.number} `}</div>
+          } `}</Info>
+          <Info>{`연락처: ${userInfo?.number} `}</Info>
+        </UserInfo>
+      )}
+      {!userInfo && noData && (
+        <UserInfo>
+          <Title>
+            <HiScissors />
+            뽀까까까
+          </Title>
+          <Info>{noData}</Info>
         </UserInfo>
       )}
     </Container>
@@ -62,34 +83,58 @@ export function ReservationCheck() {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   > h1 {
-    font-size: 24px;
+    font-size: 27px;
+    font-weight: 600;
   }
 
   > span {
     font-size: 18px;
-    padding: 15px 0;
+    padding: 20px 0 10px 0;
   }
 
   > form > input {
-    height: 30px;
+    height: 35px;
     font-size: 18px;
+    border: 3px solid ${colors.grey};
+    padding: 4px;
   }
 
   > form > button {
-    margin-left: 10px;
-    height: 30px;
+    height: 35px;
     font-size: 18px;
-    border: 1px solid;
-    padding: 2px;
+    padding: 4px;
     background-color: ${colors.lightPink};
+    border: 3px solid ${colors.grey};
+    border-left: 0px;
   }
 `;
 
 const UserInfo = styled.div`
-  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 40px 0;
   width: 350px;
-  line-height: 1.5;
   font-size: 20px;
+  background-color: ${colors.white};
+  box-shadow: ${colors.lightPink} 0px 0px 0px 2px inset,
+    rgb(255, 255, 255) 10px -10px 0px -3px;
+`;
+
+const Title = styled.div`
+  height: 50px;
+  width: 100%;
+  font-weight: 600;
+  margin-bottom: 10px;
+  border-bottom: 5px solid ${colors.lightPink};
+  text-align: center;
+  padding-top: 17px;
+  background-color: ${colors.lightPink};
+`;
+
+const Info = styled.div`
+  padding: 10px 20px;
 `;
