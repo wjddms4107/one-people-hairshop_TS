@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
 import { RootState } from "store/store";
-import { colors } from "styles/Theme";
+import { colors, device, deviceSizes } from "styles/Theme";
 import { changeName, changeNumber, clickSort, changeRequest } from "store/info";
 import Modal from "react-modal";
 import { HiScissors } from "react-icons/hi";
@@ -146,14 +146,20 @@ const HAIR_SORTS = [
 ];
 
 const Container = styled.section`
-  width: 100%;
-  margin-left: 20px;
+  width: 480px;
+  height: 100%;
+  margin-top: 30px;
   padding: 10px 0;
   padding-left: 10px;
   color: ${colors.brown};
   background-color: ${colors.white};
   box-shadow: ${colors.lightPink} 0px 0px 0px 2px inset,
     rgb(255, 255, 255) 10px -10px 0px -3px;
+
+  ${device.desktop} {
+    margin-left: 20px;
+    margin-top: 0;
+  }
 `;
 
 const InfoHeader = styled.header`

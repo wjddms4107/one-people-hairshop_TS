@@ -33,20 +33,20 @@ export function Nav() {
 }
 
 const Container = styled.main`
-  margin: 300px auto;
-  width: 100%;
-  max-width: 100vw;
-  min-width: ${deviceSizes.mobile};
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  max-width: 1000px;
+  height: 100%;
+  box-sizing: border-box;
   background-color: #ffffff;
-  box-shadow: 5px 5px 10px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+    rgba(0, 0, 0, 0.22) 0px 10px 10px;
 
   > nav {
     display: flex;
     margin: 20px 0;
-
     height: 40px;
 
     > ul {
@@ -66,32 +66,23 @@ const Container = styled.main`
     }
   }
 
-  ${device.tablet} {
-    width: 100%;
-  }
-
   ${device.desktop} {
-    width: 80%;
-    max-width: 1000px;
-    height: 100%;
-    box-sizing: border-box;
-    background-color: #ffffff;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
-      rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    margin: 200px auto;
+    width: 1200px;
+    max-width: 100vw;
+    min-width: ${deviceSizes.mobile};
   }
 `;
 
 const Dashboard = styled.div`
   width: 100%;
+  height: 100%;
   padding: 40px;
-  height: 620px;
   background-color: #f9e5e6;
 
   ${device.desktop} {
-    width: 100%;
-    min-width: fit-content;
-    height: 100%;
     height: 620px;
-    background-color: #f9e5e6;
+
+    min-width: fit-content;
   }
 `;

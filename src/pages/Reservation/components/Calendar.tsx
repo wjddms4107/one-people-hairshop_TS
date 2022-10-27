@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/esm/locale";
-import { colors } from "styles/Theme";
-import { clickCalendar } from "store/date";
+import { colors, device, deviceSizes } from "styles/Theme";
+import { clickCalendar, clickTime } from "store/date";
 import ReservationTime from "./ReservationTime";
 
 function Calendar() {
@@ -29,6 +29,7 @@ function Calendar() {
           setStartDate(date);
           setIsDateSelected(true);
           handleCalendar(date);
+          dispatch(clickTime(""));
         }}
         inline
         locale={ko}
@@ -42,6 +43,7 @@ function Calendar() {
 const CalendarSection = styled.section`
   display: flex;
   flex-direction: row;
+  justify-content: center;
 
   .react-datepicker {
     height: 470px;
