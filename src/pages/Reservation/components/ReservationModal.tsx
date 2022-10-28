@@ -93,11 +93,11 @@ const ModalHeader = styled.header`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20px;
   font-size: 23px;
   font-weight: 600;
   color: ${colors.brown};
   line-height: 1.2;
+  margin: 20px;
 
   > h1 {
     font-size: 26px;

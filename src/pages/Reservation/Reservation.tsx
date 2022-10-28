@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { device, deviceSizes } from "styles/Theme";
+import { colors, device, deviceSizes } from "styles/Theme";
 import { RootState } from "store/store";
 import { Calendar, ReservationInfo } from "./components";
 
@@ -28,21 +28,20 @@ const Progress = styled.div`
   font-size: 27px;
   font-weight: 600;
   text-align: center;
-  align-items: center;
+  color: ${colors.brown};
+  text-shadow: 3px 3px ${colors.white};
   padding-bottom: 30px;
 `;
 
 const Container = styled.section`
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   min-width: ${deviceSizes.mobile};
 
   ${device.desktop} {
     width: 100%;
     flex-direction: row;
-    align-items: center;
-    justify-content: center;
   }
 `;

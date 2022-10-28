@@ -13,6 +13,7 @@ function Calendar() {
   const dispatch: Dispatch = useDispatch();
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [isDateSelected, setIsDateSelected] = useState<boolean>(false);
+
   const handleCalendar = (date: Date | null) => {
     dispatch(
       clickCalendar({
@@ -21,6 +22,7 @@ function Calendar() {
       })
     );
   };
+
   return (
     <CalendarSection>
       <DatePicker
@@ -44,6 +46,7 @@ const CalendarSection = styled.section`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
   .react-datepicker {
     height: 470px;
@@ -74,10 +77,10 @@ const CalendarSection = styled.section`
   }
 
   .react-datepicker__current-month {
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 60px;
     color: ${colors.brown};
     font-size: 25px;
     font-weight: 500;
@@ -95,8 +98,8 @@ const CalendarSection = styled.section`
   .react-datepicker__day--keyboard-selected,
   .react-datepicker__day--in-range,
   .react-datepicker__day--in-selecting-range {
-    background-color: ${colors.darkPink};
     color: ${colors.white};
+    background-color: ${colors.darkPink};
   }
 
   .react-datepicker__day--disabled {

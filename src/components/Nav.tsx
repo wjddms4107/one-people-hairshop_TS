@@ -5,7 +5,7 @@ import { colors, device, deviceSizes } from "../styles/Theme";
 
 export function Nav() {
   const navigate = useNavigate();
-  const [activeList, setActiveList] = useState<string>();
+  const [activeList, setActiveList] = useState<string>("뽀까까까");
 
   const changeNavigate = (list: string) => {
     switch (list) {
@@ -58,7 +58,6 @@ const Container = styled.main`
   width: 100%;
   max-width: 1000px;
   height: 100%;
-  box-sizing: border-box;
   background-color: #ffffff;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
     rgba(0, 0, 0, 0.22) 0px 10px 10px;
@@ -69,9 +68,6 @@ const Container = styled.main`
 
     > ul {
       display: flex;
-      flex-direction: rows;
-      align-items: center;
-      justify-content: center;
     }
   }
 
@@ -85,13 +81,13 @@ const Container = styled.main`
 
 const ListButton = styled.button<{ activeList?: string; list: string }>`
   width: 140px;
+  height: 100%;
   display: flex;
-  font-size: 22px;
-  color: ${colors.brown};
-  font-weight: 600;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  color: ${colors.brown};
+  font-size: 22px;
+  font-weight: 600;
 
   &:hover {
     background-color: ${colors.lightPink};

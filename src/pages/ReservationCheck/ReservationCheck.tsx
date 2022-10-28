@@ -15,10 +15,9 @@ export interface UserInfoType {
 }
 
 export function ReservationCheck() {
-  const [searchNumber, setSearchNumber] = useState("");
+  const [searchNumber, setSearchNumber] = useState<string>();
   const [userInfo, setUserInfo] = useState<UserInfoType | null>();
   const [noData, setNoData] = useState<string>();
-  console.log("searchNumber:", searchNumber);
 
   const searchMyReserve = async (e: React.FormEvent<HTMLFormElement>) => {
     setNoData("");
@@ -84,10 +83,14 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: ${colors.brown};
+  font-weight: bold;
 
   > h1 {
     font-size: 27px;
     font-weight: 600;
+    color: ${colors.brown};
+    text-shadow: 3px 3px ${colors.white};
   }
 
   > span {

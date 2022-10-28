@@ -30,7 +30,7 @@ function ReservationInfo() {
 
   const fillInfo = () => {
     const numberRegExp = /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/;
-    if (name === "" && number === "" && selectedSort === "") {
+    if (name === "" || number === "" || selectedSort === "") {
       window.alert("이름, 번호, 종류선택은 필수입니다.");
     } else if (!numberRegExp.test(number)) {
       window.alert("번호를 올바르게 입력해주세요.");
@@ -148,11 +148,11 @@ const HAIR_SORTS = [
 const Container = styled.section`
   width: 480px;
   height: 100%;
-  margin-top: 30px;
-  padding: 10px 0;
-  padding-left: 10px;
   color: ${colors.brown};
   background-color: ${colors.white};
+  padding: 10px 0;
+  padding-left: 10px;
+  margin-top: 30px;
   box-shadow: ${colors.lightPink} 0px 0px 0px 2px inset,
     rgb(255, 255, 255) 10px -10px 0px -3px;
 
@@ -166,9 +166,9 @@ const InfoHeader = styled.header`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20px;
   font-size: 23px;
   font-weight: 600;
+  margin: 20px;
 
   > h1 {
     font-size: 26px;
@@ -200,19 +200,19 @@ const InfoSort = styled.div`
 const NameInput = styled.input`
   width: 80%;
   height: 35px;
-  margin: 0px 10px;
-  padding-left: 5px;
   font-size: 18px;
   border: 3px solid ${colors.lightGrey};
+  padding-left: 5px;
+  margin: 0px 10px;
 `;
 
 const NumberInput = styled(NameInput)`
   width: 80%;
   height: 35px;
-  margin: 0px 10px;
-  padding-left: 5px;
   font-size: 18px;
   border: 3px solid ${colors.lightGrey};
+  padding-left: 5px;
+  margin: 0px 10px;
 `;
 
 const Sorts = styled.div`
@@ -245,10 +245,10 @@ const SortButton = styled.button<{ sort: string; selectedSort: string }>`
 
 const RequestTextarea = styled.textarea`
   height: 100px;
-  margin: 0px 15px;
-  padding: 8px;
   border: 3px solid #f2f2f2;
   font-size: 18px;
+  padding: 8px;
+  margin: 0px 15px;
 `;
 
 const SubmitButton = styled.button`
@@ -258,6 +258,5 @@ const SubmitButton = styled.button`
   font-size: 22px;
   padding: 3px;
   margin-top: 5px;
-
   border: 1px solid ${colors.grey};
 `;

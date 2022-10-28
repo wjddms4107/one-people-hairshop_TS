@@ -9,9 +9,9 @@ import { UserInfoType } from "pages/ReservationCheck/ReservationCheck";
 import { firestore } from "../../../firebase";
 
 interface TotalInfoType {
-  selectedTime?: UserInfoType[];
-  day?: UserInfoType[];
-  month?: UserInfoType[];
+  selectedTime?: string;
+  day?: number;
+  month?: number;
   [key: number]: UserInfoType;
 }
 
@@ -21,13 +21,13 @@ function ReservationTime() {
     (state: RootState) => state.date
   );
 
-  const [reservedTime, setReservedTime] = useState<string[]>([]);
+  const [reservedTime, setReservedTime] = useState<(string | undefined)[]>([]);
 
   const getReservedTime = () => {
     const reserve = firestore.collection("reserve");
 
     reserve.get().then((docs) => {
-      let bucketData: any[] = [];
+      let bucketData = [] as (string | undefined)[][];
       let infoObjArr = [] as TotalInfoType[];
       docs.forEach((doc) => {
         infoObjArr = [...infoObjArr, { ...doc.data() }];
